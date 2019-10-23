@@ -1,0 +1,23 @@
+<!-- Hikari 설정 추가하므로 반드시 자바의 resources에 log4jdbc.log4j2.properties파일 추가해야한다.-->
+    <!-- root-context.xml에 추가할 내용-->
+    
+		<!-- /.hikariConfig (DB접속부 설정) -->
+		<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
+		<!-- 주의하기 jdbcUrl의 value는 DB마다 값이 다르다. 맨 끝에 XE가 맞는지, oracle이 맞는지 확인하기 -->
+		<property name="username" value="book"></property>
+		<property name="password" value="warm"></property>
+		</bean>
+		<!-- ./hikariConfig (DB접속부 설정) -->
+		
+		<!-- /.HikariCP configuration -->
+		<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"/>
+		</bean>
+		<!-- ./HikariCP configuration -->
+    
+    <!-- 자바파일의 resources에 생성해야 할 파일 -->
+    파일명 : log4jdbc.log4j2.properties
+    파일 내용 : log4jdbc.spylogdelegator.name=net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator
+    
